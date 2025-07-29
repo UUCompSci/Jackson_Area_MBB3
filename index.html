@@ -1,1 +1,66 @@
-<!-- Dashboard page with banner, next match, top performers -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Jackson Area Men’s Basketball</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; background: #f5f5f5; color: #333; }
+        header { background: #990000; color: white; padding: 20px; text-align: center; }
+        nav { text-align: center; margin-top: 10px; }
+        nav a { color: #fff; margin: 0 15px; text-decoration: none; font-weight: bold; }
+        .section { padding: 20px; background: white; margin: 20px; border-radius: 8px; }
+        .top-performers { display: flex; gap: 20px; justify-content: space-around; flex-wrap: wrap; }
+        .performer { background: #eee; padding: 15px; border-radius: 6px; text-align: center; width: 200px; }
+        .banner { background: #222; color: #fff; padding: 15px; text-align: center; font-size: 1.2em; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Jackson Area Men’s Basketball</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="teams_union.html">Union</a>
+            <a href="teams_lane.html">Lane</a>
+            <a href="teams_fhu.html">FHU</a>
+            <a href="stats.html">Stats</a>
+            <a href="schedule.html">Schedule</a>
+            <a href="ai_insights.html">AI Insights</a>
+        </nav>
+    </header>
+
+    <div class="banner">
+        🏀 Next Game: Union vs Lane | August 15, 2025 – Tip-off at 7:00 PM CST
+    </div>
+
+    <section class="section">
+        <h2>Top Performers</h2>
+        <div class="top-performers">
+            <div class="performer">
+                <h3>Casey Williams</h3>
+                <p>Points: 22</p>
+                <p>Assists: 6</p>
+            </div>
+            <div class="performer">
+                <h3>Jack Shackelford</h3>
+                <p>Rebounds: 10</p>
+                <p>Blocks: 2</p>
+            </div>
+            <div class="performer">
+                <h3>Sam Youngblood</h3>
+                <p>Steals: 3</p>
+                <p>3PT: 4/5</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>Recent Results</h2>
+        <ul>
+            <li>Union 78 - Lane 72 (W)</li>
+            <li>FHU 65 - Union 70 (W)</li>
+            <li>Union 59 - Lane 64 (L)</li>
+        </ul>
+    </section>
+</body>
+</html>
