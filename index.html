@@ -1,35 +1,70 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Jackson Area Men's Basketball</title>
+    <title>Jackson Area Men’s Basketball</title>
+    <link rel="stylesheet" href="style.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #f9f9f9;
-            padding-top: 50px;
-        }
-        h1 {
-            color: #c90000;
-        }
-        a {
-            display: block;
-            margin: 20px;
-            font-size: 20px;
-            text-decoration: none;
-            color: #003366;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
+        body { font-family: Arial, sans-serif; margin: 0; background: #f5f5f5; color: #333; }
+        header { background: #990000; color: white; padding: 20px; text-align: center; }
+        nav a { color: white; margin: 0 15px; text-decoration: none; font-weight: bold; }
+        .countdown { font-size: 1.8rem; background: #fff; border-radius: 10px; padding: 20px; width: fit-content; margin: 20px auto; box-shadow: 0 2px 10px rgba(0,0,0,0.2);}
+        .highlight { background: #222; color: #fff; padding: 20px; text-align: center; }
+        .photos-section { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; padding: 20px; }
+        .photo-card { background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); width: 250px; }
+        .photo-card img { width: 100%; height: auto; }
+        .photo-card p { padding: 10px; text-align: center; font-weight: bold; }
     </style>
 </head>
 <body>
-    <h1>Jackson Area Men's Basketball</h1>
-    <a href="teams_union.html">🏀 Union University Team Page</a>
-    <a href="teams_lane.html">🔥 Lane College Team Page</a>
-    <a href="teams_fhu.html">🦁 Freed-Hardeman Team Page</a>
+    <header>
+        <h1>Jackson Area Men’s Basketball</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="teams_union.html">Union</a>
+            <a href="teams_lane.html">Lane</a>
+            <a href="teams_fhu.html">FHU</a>
+            <a href="stats.html">Stats</a>
+            <a href="schedule.html">Schedule</a>
+            <a href="ai_insights.html">AI Insights</a>
+        </nav>
+    </header>
+
+    <section class="highlight">
+        <h2>🏀 Union vs Lane - Opening Game</h2>
+        <div id="countdown" class="countdown">Loading countdown...</div>
+        <script>
+            const gameDate = new Date("October 28, 2025 19:00:00").getTime();
+            const countdown = document.getElementById("countdown");
+            setInterval(() => {
+                const now = new Date().getTime();
+                const distance = gameDate - now;
+                if (distance < 0) {
+                    countdown.innerHTML = "🏀 Game in Progress or Finished!";
+                } else {
+                    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                    countdown.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s until tip-off`;
+                }
+            }, 1000);
+        </script>
+    </section>
+
+    <section class="photos-section">
+        <div class="photo-card">
+            <img src="union_player.jpg" alt="Union Player">
+            <p>Union University</p>
+        </div>
+        <div class="photo-card">
+            <img src="lane_player.jpg" alt="Lane Player">
+            <p>Lane College</p>
+        </div>
+        <div class="photo-card">
+            <img src="fhu_player.jpg" alt="Freed-Hardeman Player">
+            <p>Freed-Hardeman</p>
+        </div>
+    </section>
 </body>
 </html>
