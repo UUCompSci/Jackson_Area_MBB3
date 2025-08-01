@@ -1,10 +1,1 @@
-
-body { font-family: Arial, sans-serif; margin: 0; background: #f5f5f5; color: #222; }
-header { background: #990000; color: white; padding: 20px; text-align: center; }
-nav a { color: white; margin: 0 15px; text-decoration: none; font-weight: bold; }
-.hero { text-align: center; padding: 20px; background: #222; color: white; }
-.countdown { font-size: 1.8rem; margin-top: 10px; }
-.gallery { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; padding: 20px; }
-.card { background: white; border-radius: 10px; overflow: hidden; width: 250px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); text-align: center; }
-.card img { width: 100%; height: auto; }
-.card p { font-weight: bold; padding: 10px 0; }
+/* ESPN-style CSS placeholder */
