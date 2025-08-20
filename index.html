@@ -1,47 +1,139 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Jackson Area Men's Basketball</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        body { font-family: Arial; background: #fff; text-align: center; margin: 0; padding: 0; }
-        header { background: darkred; color: white; padding: 1em; }
-        nav a { margin: 0 10px; color: white; text-decoration: none; }
-        .countdown { font-size: 1.5em; margin-top: 20px; }
-    </style>
+  <meta charset="UTF-8" />
+  <title>Jackson Area Men's Basketball</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body { font-family: Arial, sans-serif; margin:0; background:#fff; color:#222; }
+    header { background:#7b0000; color:#fff; }
+    .topbar { max-width:1100px; margin:0 auto; padding:16px 20px; }
+    h1 { margin:0 0 8px 0; font-size:28px; }
+    nav { display:flex; flex-wrap:wrap; gap:14px; align-items:center; }
+    nav a { color:#fff; text-decoration:none; font-weight:bold; padding:6px 8px; border-radius:6px; }
+    nav a.active, nav a:hover { background:rgba(255,255,255,.18); }
+    .wrap { max-width:900px; margin:0 auto; padding:20px; text-align:center; }
+    .countdown { font-size:22px; margin:10px 0 6px; }
+    #timer { font-size:26px; margin-top:6px; }
+    .section { display:none; text-align:left; margin:24px auto 40px; padding:18px 22px; border:1px solid #eee; border-radius:10px; background:#fafafa; }
+    .section h2 { margin-top:0; color:#7b0000; }
+    /* simple utility to hide all on "Home" */
+    .hidden { display:none !important; }
+    /* spacer below header bar */
+    .spacer { height:6px; background:#eee; }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>Jackson Area Men’s Basketball</h1>
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="teams_union.html">Union</a>
-            <a href="teams_lane.html">Lane</a>
-            <a href="teams_fhu.html">FHU</a>
-            <a href="schedule.html">Schedule</a>
-            <a href="https://docs.google.com/spreadsheets/d/1xAiLYMqSjwFlOzQ8Er0ZWzy2i1v32OnS/edit?usp=drive_link&ouid=100044774409368230846&rtpof=true&sd=true">Stats</a>
-            <a href="ai_insights.html">AI Insights</a>
-        </nav>
-    </header>
-    <div class="countdown">
-        <p>🏀 Next Game: Union vs Lane</p>
-        <p id="timer">Loading countdown...</p>
+
+  <header>
+    <div class="topbar">
+      <h1>Jackson Area Men’s Basketball</h1>
+      <nav id="main-nav">
+        <a href="#home" data-target="home">Home</a>
+        <a href="#welcome" data-target="welcome">Welcome</a>
+        <a href="#vision" data-target="vision">Vision &amp; Mission</a>
+        <a href="#owner" data-target="owner">About the Owner</a>
+        <a href="#contact" data-target="contact">Contact Us</a>
+        <!-- Existing site links -->
+        <a href="teams_union.html">Union</a>
+        <a href="teams_lane.html">Lane</a>
+        <a href="teams_fhu.html">FHU</a>
+        <a href="schedule.html">Schedule</a>
+        <a href="https://docs.google.com/spreadsheets/d/1xAiLYMqSjwFlOzQ8Er0ZWzy2i1v32OnS/edit?usp=drive_link&ouid=100044774409368230846&rtpof=true&sd=true">Stats</a>
+        <a href="ai_insights.html">AI Insights</a>
+      </nav>
     </div>
-    <script>
-        var countDownDate = new Date("Nov 1, 2025 19:00:00").getTime();
-        var x = setInterval(function() {
-            var now = new Date().getTime();
-            var distance = countDownDate - now;
-            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-            document.getElementById("timer").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
-            if (distance < 0) {
-                clearInterval(x);
-                document.getElementById("timer").innerHTML = "Game Time!";
-            }
-        }, 1000);
-    </script>
+  </header>
+  <div class="spacer"></div>
+
+  <div class="wrap">
+    <!-- Countdown always visible on top -->
+    <div class="countdown">
+      <div>🏀 Next Game: Union vs Lane</div>
+      <div id="timer">Loading countdown…</div>
+    </div>
+
+    <!-- “Pages” shown below based on the URL hash -->
+    <section id="welcome" class="section">
+      <h2>Welcome to Jackson Area College Basketball</h2>
+      <p>
+        This site collects and displays stats for college basketball teams in the Jackson, TN area.
+        It helps fans find information easily and helps teams improve using AI-driven insights.
+      </p>
+    </section>
+
+    <section id="vision" class="section">
+      <h2>Vision &amp; Mission</h2>
+      <p>
+        Our mission is to make basketball stats easy to access and understand. We aim to use AI to
+        provide insights like team strengths, weaknesses, and game predictions.
+      </p>
+    </section>
+
+    <section id="owner" class="section">
+      <h2>About the Owner</h2>
+      <p>
+        I am a computer science student interested in sports and AI. This project is part of my
+        senior capstone, which aims to merge my passions and help the community.
+      </p>
+    </section>
+
+    <section id="contact" class="section">
+      <h2>Contact Us</h2>
+      <p>Email: info@jacksonhoops.com</p>
+      <p>2025 Jackson Area College Basketball. All rights reserved.</p>
+    </section>
+  </div>
+
+  <script>
+    // ===== Countdown (always visible) =====
+    const countDownDate = new Date("Nov 1, 2025 19:00:00").getTime();
+    const tick = setInterval(() => {
+      const now = Date.now();
+      const distance = countDownDate - now;
+      if (distance <= 0) {
+        clearInterval(tick);
+        document.getElementById("timer").textContent = "Game Time!";
+        return;
+      }
+      const d = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const s = Math.floor((distance % (1000 * 60)) / 1000);
+      document.getElementById("timer").textContent = `${d}d ${h}h ${m}m ${s}s`;
+    }, 1000);
+
+    // ===== Simple hash router =====
+    const sections = Array.from(document.querySelectorAll(".section"));
+    const navLinks = Array.from(document.querySelectorAll("#main-nav a[href^='#']"));
+
+    function show(hash) {
+      // default = #home (no section visible)
+      const target = (hash || "#home").toLowerCase();
+
+      // toggle sections
+      sections.forEach(sec => {
+        sec.style.display = (target === `#${sec.id}`) ? "block" : "none";
+      });
+
+      // active link state
+      navLinks.forEach(a => {
+        if (a.getAttribute("href").toLowerCase() === target) {
+          a.classList.add("active");
+        } else {
+          a.classList.remove("active");
+        }
+      });
+    }
+
+    // Initial load (default to #home so Welcome is hidden until clicked)
+    if (!location.hash) {
+      history.replaceState(null, "", "#home");
+    }
+    show(location.hash);
+
+    // Handle back/forward and manual hash changes
+    window.addEventListener("hashchange", () => show(location.hash));
+  </script>
 </body>
 </html>
