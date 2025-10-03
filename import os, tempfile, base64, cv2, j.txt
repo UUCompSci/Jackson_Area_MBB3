@@ -1,0 +1,159 @@
+import os, tempfile, base64, cv2, json, re
+import gradio as gr
+
+# --- Settings ---
+MAX_FRAMES = 24          # keep tiny & cheap
+BATCH = 6                # send frames in small groups
+MODEL = os.getenv("VISION_MODEL", "gpt-4o")
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+
+PROMPT = (
+    "You are a veteran sports video analyst. You will see frames sampled "
+    "ONLY from the FIRST HALF (0–50%) of a game. The team of interest is identified "
+    "by its jersey color (HEX) and a target player number.\n\n"
+    "Return compact JSON with keys:\n"
+    "  team_weaknesses: [strings]\n"
+    "  player_weaknesses: [strings]\n"
+    "  improvement_ideas: [strings]\n"
+    "  evidence: [ {timestamp: string, note: string} ]\n"
+    "Keep items short; avoid generic fluff."
+)
+
+def _mock_response(timestamps):
+    return {
+        "team_weaknesses": [
+            "Slow to match up in transition",
+            "Poor weak-side rebounding",
+        ],
+        "player_weaknesses": [
+            "Late closeouts on perimeter shooters",
+            "Ball-watching; loses backdoor cuts",
+        ],
+        "improvement_ideas": [
+            "Assign early help on drives",
+            "Weak-side tag & rotate drill",
+            "Closeout technique (hands high, choppy steps)",
+        ],
+        "evidence": [{"timestamp": f"{t:.1f}s", "note": "Frame suggests breakdown"} for t in timestamps],
+    }
+
+def _b64(img_path):
+    with open(img_path, "rb") as f:
+        return "data:image/jpeg;base64," + base64.b64encode(f.read()).decode()
+
+def sample_first_half(video_path, max_frames=MAX_FRAMES):
+    cap = cv2.VideoCapture(video_path)
+    if not cap.isOpened():
+        raise RuntimeError("Could not open video. Install ffmpeg or try mp4/h264.")
+    fps = cap.get(cv2.CAP_PROP_FPS) or 30.0
+    n = cap.get(cv2.CAP_PROP_FRAME_COUNT) or 0
+    dur = n / fps if n else 0
+    half = dur * 0.5 if dur else 8 * 60  # fallback: 8 min
+    step = max(half / max_frames, 1.5)
+
+    frames, ts = [], []
+    t = 0.0
+    while t < half and len(frames) < max_frames:
+        cap.set(cv2.CAP_PROP_POS_MSEC, t * 1000)
+        ok, frame = cap.read()
+        if not ok:
+            break
+        h, w = frame.shape[:2]
+        scale = 720 / max(h, w)
+        if scale < 1:
+            frame = cv2.resize(frame, (int(w * scale), int(h * scale)))
+        tmp = tempfile.NamedTemporaryFile(suffix=".jpg", delete=False)
+        cv2.imwrite(tmp.name, frame, [int(cv2.IMWRITE_JPEG_QUALITY), 85])
+        frames.append(tmp.name)
+        ts.append(t)
+        t += step
+    cap.release()
+    return frames, ts
+
+def call_llm(frames_b64, timestamps, team_name, team_hex, player_number):
+    if not OPENAI_API_KEY:
+        return _mock_response(timestamps)
+
+    from openai import OpenAI
+    client = OpenAI(api_key=OPENAI_API_KEY)
+
+    content = [
+        {"type": "text",
+         "text": f"Team: {team_name}. Jersey color: {team_hex}. Focus player: #{player_number}.\n" + PROMPT}
+    ]
+    for url in frames_b64:
+        content.append({"type": "image_url", "image_url": {"url": url}})
+
+    chat = client.chat.completions.create(
+        model=MODEL,
+        messages=[{"role": "user", "content": content}],
+        temperature=0.2,
+    )
+    text = chat.choices[0].message.content
+
+    try:
+        return json.loads(text)
+    except Exception:
+        m = re.search(r"\{[\s\S]*\}", text)
+        return json.loads(m.group(0)) if m else {"error": "Model did not return JSON."}
+
+def analyze(video, team_name, team_hex, player_number):
+    if video is None:
+        return "Please upload a video.", "", "", "", ""
+
+    frames, ts = sample_first_half(video)
+    combined = {"team_weaknesses": [], "player_weaknesses": [], "improvement_ideas": [], "evidence": []}
+
+    def dedup(items):
+        seen, out = set(), []
+        for x in items:
+            k = x.strip().lower()
+            if k not in seen:
+                seen.add(k)
+                out.append(x)
+        return out
+
+    for i in range(0, len(frames), BATCH):
+        batch = frames[i:i+BATCH]
+        urls = [_b64(p) for p in batch]
+        tss = ts[i:i+BATCH]
+        res = call_llm(urls, tss, team_name, team_hex, player_number)
+        if "error" in res:
+            return f"LLM error: {res['error']}", "", "", "", ""
+        combined["team_weaknesses"] += res.get("team_weaknesses", [])
+        combined["player_weaknesses"] += res.get("player_weaknesses", [])
+        combined["improvement_ideas"] += res.get("improvement_ideas", [])
+        combined["evidence"] += res.get("evidence", [])
+
+    combined["team_weaknesses"] = dedup(combined["team_weaknesses"])[:8]
+    combined["player_weaknesses"] = dedup(combined["player_weaknesses"])[:8]
+    combined["improvement_ideas"] = dedup(combined["improvement_ideas"])[:8]
+
+    team_w = "\n".join(f"• {x}" for x in combined["team_weaknesses"]) or "—"
+    player_w = "\n".join(f"• {x}" for x in combined["player_weaknesses"]) or "—"
+    ideas = "\n".join(f"• {x}" for x in combined["improvement_ideas"]) or "—"
+    evid = "\n".join(f"• {e.get('timestamp','?')} — {e.get('note','')}" for e in combined["evidence"][:20]) or "—"
+
+    head = f"Analyzed FIRST HALF only. Team: {team_name} | Player #{player_number} | Color {team_hex}"
+    return head, team_w, player_w, ideas, evid
+
+with gr.Blocks(title="AI Insight – Simple") as demo:
+    gr.Markdown("# AI Insight (Simple)\nUpload a game video. The app samples frames from the **first half**, asks a vision model for weaknesses, and lists concise takeaways. If no API key is set, it returns mock results so you can test the flow.")
+    with gr.Row():
+        video = gr.Video(label="Game video (MP4/MOV)")
+    with gr.Row():
+        team = gr.Textbox(label="Team name", value="River City Raptors")
+        color = gr.ColorPicker(label="Team color", value="#0ea5e9")
+        player = gr.Number(label="Player number", precision=0, value=5)
+    btn = gr.Button("Analyze First Half")
+    head = gr.Markdown()
+    with gr.Row():
+        team_w = gr.Markdown(label="Team weaknesses")
+        player_w = gr.Markdown(label="Player weaknesses")
+    ideas = gr.Markdown(label="Improvement ideas")
+    evid = gr.Markdown(label="Evidence")
+
+    btn.click(analyze, inputs=[video, team, color, player], outputs=[head, team_w, player_w, ideas, evid])
+
+if __name__ == "__main__":
+    demo.launch()
