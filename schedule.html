@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Schedules – Jackson Area Men’s Basketball</title>
+<style>
+  :root{
+    --primary:#8b0000;
+    --bg:#f7f7f7;
+    --card:#ffffff;
+    --text:#222;
+    --muted:#666;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}
+  header{background:var(--primary);color:#fff;padding:16px 20px;font-size:22px;font-weight:700}
+  .wrap{display:flex;gap:20px;max-width:1200px;margin:20px auto;padding:0 16px}
+  .sidebar{width:240px;background:var(--card);border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.08);padding:10px}
+  .tab-btn{display:block;width:100%;text-align:left;border:0;background:transparent;padding:12px 14px;margin:4px 0;border-radius:10px;font-weight:700;cursor:pointer}
+  .tab-btn.active{background:#ffe7e7;color:var(--primary);box-shadow:inset 0 0 0 2px var(--primary)}
+  .content{flex:1;background:var(--card);border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.08);padding:10px}
+  .team-header{display:flex;align-items:center;gap:12px;padding:12px 10px;border-bottom:1px solid #eee}
+  .pill{display:inline-block;background:#f0f0f0;color:#444;padding:4px 10px;border-radius:999px;font-size:12px;margin-left:8px}
+  table{width:100%;border-collapse:collapse}
+  th,td{padding:12px;border-bottom:1px solid #eee;font-size:14px;vertical-align:top}
+  th{background:#fafafa;text-align:left;position:sticky;top:0}
+  .row{background:#fff}
+  .badge{display:inline-block;padding:3px 8px;border-radius:8px;font-size:12px}
+  .W{background:#e6ffed;color:#126b2e}
+  .L{background:#ffecec;color:#b00020}
+  a.stream{display:inline-block;padding:6px 10px;border-radius:8px;background:var(--primary);color:#fff;text-decoration:none}
+  .hint{color:var(--muted);font-size:12px;margin:6px 0 14px}
+  @media (max-width: 900px){
+    .wrap{flex-direction:column}
+    .sidebar{width:100%}
+    table{display:block;overflow-x:auto}
+  }
+</style>
+</head>
+<body>
+<header>Schedules – Jackson Area Men’s Basketball</header>
+<div class="wrap">
+  <aside class="sidebar" role="tablist" aria-label="Schools">
+    <button class="tab-btn active" data-tab="union">Union University</button>
+    <button class="tab-btn" data-tab="lane">Lane College</button>
+    <button class="tab-btn" data-tab="fhu">Freed‑Hardeman</button>
+  </aside>
+
+  <main class="content">
+    <!-- UNION -->
+    <section id="tab-union" class="tab-panel" role="tabpanel">
+      <div class="team-header">
+        <h2 style="margin:0">Union University <span class="pill">2025-26</span></h2>
+      </div>
+      <p class="hint">This is the <b>original schedule</b> from the official site. Scores will be updated as they become available.</p>
+      <table aria-label="Union schedule">
+        <thead><tr>
+          <th style="min-width:120px">Date</th>
+          <th style="min-width:220px">Opponent</th>
+          <th>Location</th>
+          <th>Result</th>
+          <th style="min-width:120px">Watch</th>
+        </tr></thead>
+        <tbody>
+           <tr class="row"><td>Oct 20, 2025 • 7:00 PM</td><td>Bulldog Madness (Exhibition)</td><td>Jackson, TN</td><td>—</td><td><a class="stream" href="#">Stream</a></td></tr>
+  <tr class="row"><td>Oct 25, 2025 • 4:00 PM</td><td>University of Tennessee Southern</td><td>Jackson, TN</td><td>—</td><td><a class="stream" href="#">Stream</a></td></tr>
+
+  <tr class="row"><td>Nov 20, 2025 • 7:00 PM</td><td>Missouri S&amp;T</td><td>Jackson, TN</td><td>—</td><td><a class="stream" href="#">Stream</a></td></tr>
+  <tr class="row"><td>Nov 24, 2025 • TBA</td><td>at Maryville University</td><td>St. Louis, MO</td><td>—</td><td><a class="stream" href="#">Stream</a></td></tr>
+  <tr class="row"><td>Nov 26, 2025 • 7:00 PM</td><td>Fisk University</td><td>Jackson, TN</td><td>—</td><td><a class="stream" href="#">Stream</a></td></tr>
+
+  <tr class="row"><td>Dec 04, 2025 • 7:30 PM</td><td>at Delta State University</td><td>Cleveland, MS</td><td>—</td><td><a class="stream" href="#">Stream</a></td></tr>
+  <tr class="row"><td>Dec 06, 2025 • 4:00 PM</td><td>at Mississippi College</td><td>Clinton, MS</td><td>—</td><td><a class="stream" href="#">Stream</a></td></tr>
+  <tr class="row"><td>Dec 11, 2025 • 7:00 PM</td><td>Blue Mountain Christian University</td><td>Jackson, TN</td><td>—</td><td><a class="stream" href="#">Stream</a></td></tr>
+  <tr class="row"><td>Dec 13, 2025 • 4:00 PM</td><td>Christian Brothers University</td><td>Jackson, TN</td><td>—</td><td><a class="stream" href="#">Stream</a></td></tr>
+  <tr class="row"><td>Dec 18, 2025 • 7:30 PM</td><td>Auburn University Montgomery</td><td>Jackson, TN</td><td>—</td><td><a class="stream" href="#">Stream</a></td></tr>
+  <tr class="row"><td>Dec 20, 2025 • 4:00 PM</td><td>University of Montevallo</td><td>Jackson, TN</td><td>—</td><td><a class="stream" href="#">Stream</a></td></tr>
+
+  <tr class="row"><td>Jan 02, 2026 • 7:30 PM</td><td>at Alabama–Huntsville</td><td>Huntsville, AL</td><td>—</td><td><a class="stream" href="#">Stream</a></td></tr>
+  <tr class="row"><td>Jan 04, 2026 • 4:00 PM</td><td>at West Alabama</td><td>Livingston, AL</td><td>—</td><td><a class="stream" href="#">Stream</a></td></tr>
+  <tr class="row"><td>Jan 08, 2026 • 7:30 PM</td><td>Valdosta State University</td><td>Jackson, TN</td><td>—</td><td><a class="stream" href="#">Stream</a></td></tr>
+  <tr class="row"><td>Jan 10, 2026 • 4:00 PM</td><td>West Florida</td><td>Jackson, TN</td><td>—</td><td><a class="stream" href="#">Stream</a></td></tr>
+  <tr class="row"><td>Jan 15, 2026 • 6:30 PM</td><td>at Lee University</td><td>Cleveland, TN</td><td>—</td><td><a class="stream" href="#">Stream</a></td></tr>
+  <tr class="row"><td>Jan 17, 2026 • 4:00 PM</td><td>at Trevecca Nazarene University</td><td>Nashville, TN</td><td>—</td><td><a class="stream" href="#">Stream</a></td></tr>
+  <tr class="row"><td>Jan 22, 2026 • 7:30 PM</td><td>Mississippi College</td><td>Jackson, TN</td><td>—</td><td><a class="stream" href="#">Stream</a></td></tr>
+  <tr class="row"><td>Jan 24, 2026 • 4:00 PM</td><td>Delta State University</td><td>Jackson, TN</td><td>—</td><td><a class="stream" href="#">Stream</a></td></tr>
+  <tr class="row"><td>Jan 29, 2026 • 7:00 PM</td><td>at Christian Brothers University</td><td>Memphis, TN</td><td>—</td><td><a class="stream" href="#">Stream</a></td></tr>
+
+  <tr class="row"><td>Feb 05, 2026 • 7:30 PM</td><td>at University of Montevallo</td><td>Montevallo, AL</td><td>—</td><td><a class="stream" href="#">Stream</a></td></tr>
+  <tr class="row"><td>Feb 07, 2026 • 4:00 PM</td><td>at Auburn University Montgomery</td><td>Montgomery, AL</td><td>—</td><td><a class="stream" href="#">Stream</a></td></tr>
+  <tr class="row"><td>Feb 12, 2026 • 7:30 PM</td><td>West Alabama</td><td>Jackson, TN</td><td>—</td><td><a class="stream" href="#">Stream</a></td></tr>
+  <tr class="row"><td>Feb 14, 2026 • 4:00 PM</td><td>Alabama–Huntsville</td><td>Jackson, TN</td><td>—</td><td><a class="stream" href="#">Stream</a></td></tr>
+  <tr class="row"><td>Feb 19, 2026 • 7:30 PM</td><td>at West Florida</td><td>Pensacola, FL</td><td>—</td><td><a class="stream" href="#">Stream</a></td></tr>
+  <tr class="row"><td>Feb 21, 2026 • 3:00 PM</td><td>at Valdosta State University</td><td>Valdosta, GA</td><td>—</td><td><a class="stream" href="#">Stream</a></td></tr>
+  <tr class="row"><td>Feb 25, 2026 • 7:30 PM</td><td>Trevecca Nazarene University</td><td>Jackson, TN</td><td>—</td><td><a class="stream" href="#">Stream</a></td></tr>
+  <tr class="row"><td>Feb 27, 2026 • 7:30 PM</td><td>Lee University</td><td>Jackson, TN</td><td>—</td><td><a class="stream" href="#">Stream</a></td></tr>
+
+  <!-- Postseason placeholders — keep or remove as you prefer -->
+  <tr class="row"><td>Mar 02, 2026 • TBA</td><td>GSC Quarterfinals</td><td>Higher Seed</td><td>—</td><td><a class="stream" href="#">Stream</a></td></tr>
+  <tr class="row"><td>Mar 05, 2026 • TBA</td><td>GSC Semifinals</td><td>Higher Seed</td><td>—</td><td><a class="stream" href="#">Stream</a></td></tr>
+  <tr class="row"><td>Mar 08, 2026 • TBA</td><td>GSC Finals</td><td>Higher Seed</td><td>—</td><td><a class="stream" href="#">Stream</a></td></tr>
+  <tr class="row"><td>Mar 14, 2026 • TBA</td><td>NCAA DII South Region Championship</td><td>TBA</td><td>—</td><td><a class="stream" href="#">Stream</a></td></tr>
+  <tr class="row"><td>Mar 25, 2026 • TBA</td><td>NCAA DII Elite Eight</td><td>TBA</td><td>—</td><td><a class="stream" href="#">Stream</a></td></tr>
+  <tr class="row"><td>Apr 05, 2026 • TBA</td><td>NCAA DII Finals</td><td>TBA</td><td>—</td><td><a class="stream" href="#">Stream</a></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- LANE -->
+    <section id="tab-lane" class="tab-panel" role="tabpanel" hidden>
+      <div class="team-header">
+        <h2 style="margin:0">Lane College <span class="pill">2025-26</span></h2>
+      </div>
+      <p class="hint">This is the <b>original schedule</b> from the official site. Scores will be updated as they become available.</p>
+      <table aria-label="Lane schedule">
+        <thead><tr>
+          <th>Date</th><th>Opponent</th><th>Location</th><th>Result</th><th>Watch</th>
+        </tr></thead>
+        <tbody>
+        <tr class="row"><td>Oct 25, 2025 • 1:00 PM</td><td>Western Kentucky Tech College (Scrimmage)</td><td>Jackson, TN</td><td><span class="badge">–</span></td><td><a class="stream" href="#">Stream</a></td></tr>
+  <tr class="row"><td>Oct 29, 2025 • TBA</td><td>at Austin Peay (Exhibition)</td><td>Clarksville, TN</td><td><span class="badge">–</span></td><td><a class="stream" href="#">Stream</a></td></tr>
+  <tr class="row"><td>Nov 07, 2025 • TBA</td><td>at North Alabama (Exhibition)</td><td>Florence, AL</td><td><span class="badge">–</span></td><td><a class="stream" href="#">Stream</a></td></tr>
+
+  <tr class="row"><td>Nov 20, 2025 • 7:30 PM</td><td>Edward Waters*</td><td>Jackson, TN</td><td><span class="badge">–</span></td><td><a class="stream" href="#">Stream</a></td></tr>
+  <tr class="row"><td>Nov 22, 2025 • 4:00 PM</td><td>Savannah State*</td><td>Jackson, TN</td><td><span class="badge">–</span></td><td><a class="stream" href="#">Stream</a></td></tr>
+  <tr class="row"><td>Nov 25, 2025 • TBA</td><td>Trevecca Nazarene</td><td>Jackson, TN</td><td><span class="badge">–</span></td><td><a class="stream" href="#">Stream</a></td></tr>
+
+  <tr class="row"><td>Dec 04, 2025 • 7:30 PM</td><td>at Allen*</td><td>Columbia, SC</td><td><span class="badge">–</span></td><td><a class="stream" href="#">Stream</a></td></tr>
+  <tr class="row"><td>Dec 06, 2025 • TBA</td><td>at Benedict*</td><td>Columbia, SC</td><td><span class="badge">–</span></td><td><a class="stream" href="#">Stream</a></td></tr>
+  <tr class="row"><td>Dec 13, 2025 • 3:00 PM</td><td>Morehouse*</td><td>Jackson, TN</td><td><span class="badge">–</span></td><td><a class="stream" href="#">Stream</a></td></tr>
+  <tr class="row"><td>Dec 17, 2025 • 7:30 PM</td><td>at Fort Valley State*</td><td>Fort Valley, GA</td><td><span class="badge">–</span></td><td><a class="stream" href="#">Stream</a></td></tr>
+  <tr class="row"><td>Dec 19, 2025 • 7:00 PM</td><td>at Clayton State</td><td>Morrow, GA</td><td><span class="badge">–</span></td><td><a class="stream" href="#">Stream</a></td></tr>
+
+  <tr class="row"><td>Jan 03, 2026 • 4:00 PM</td><td>Spring Hill*</td><td>Jackson, TN</td><td><span class="badge">–</span></td><td><a class="stream" href="#">Stream</a></td></tr>
+  <tr class="row"><td>Jan 05, 2026 • 7:30 PM</td><td>Albany State*</td><td>Jackson, TN</td><td><span class="badge">–</span></td><td><a class="stream" href="#">Stream</a></td></tr>
+  <tr class="row"><td>Jan 08, 2026 • 7:30 PM</td><td>at Miles*</td><td>Fairfield, AL</td><td><span class="badge">–</span></td><td><a class="stream" href="#">Stream</a></td></tr>
+  <tr class="row"><td>Jan 10, 2026 • TBA</td><td>at Tuskegee*</td><td>Tuskegee, AL</td><td><span class="badge">–</span></td><td><a class="stream" href="#">Stream</a></td></tr>
+  <tr class="row"><td>Jan 14, 2026 • 7:30 PM</td><td>at Kentucky State*</td><td>Frankfort, KY</td><td><span class="badge">–</span></td><td><a class="stream" href="#">Stream</a></td></tr>
+  <tr class="row"><td>Jan 17, 2026 • TBA</td><td>at LeMoyne–Owen*</td><td>Memphis, TN</td><td><span class="badge">–</span></td><td><a class="stream" href="#">Stream</a></td></tr>
+  <tr class="row"><td>Jan 19, 2026 • 7:30 PM</td><td>Central State*</td><td>Jackson, TN</td><td><span class="badge">–</span></td><td><a class="stream" href="#">Stream</a></td></tr>
+
+  <tr class="row"><td>Jan 22, 2026 • 7:30 PM</td><td>at Edward Waters*</td><td>Jacksonville, FL</td><td><span class="badge">–</span></td><td><a class="stream" href="#">Stream</a></td></tr>
+  <tr class="row"><td>Jan 24, 2026 • TBA</td><td>at Savannah State*</td><td>Savannah, GA</td><td><span class="badge">–</span></td><td><a class="stream" href="#">Stream</a></td></tr>
+
+  <tr class="row"><td>Jan 29, 2026 • 7:30 PM</td><td>Allen*</td><td>Jackson, TN</td><td><span class="badge">–</span></td><td><a class="stream" href="#">Stream</a></td></tr>
+  <tr class="row"><td>Jan 31, 2026 • 4:00 PM</td><td>Benedict*</td><td>Jackson, TN</td><td><span class="badge">–</span></td><td><a class="stream" href="#">Stream</a></td></tr>
+
+  <tr class="row"><td>Feb 02, 2026 • TBA</td><td>at Clark Atlanta*</td><td>Atlanta, GA</td><td><span class="badge">–</span></td><td><a class="stream" href="#">Stream</a></td></tr>
+  <tr class="row"><td>Feb 07, 2026 • 3:00 PM</td><td>at Morehouse*</td><td>Atlanta, GA</td><td><span class="badge">–</span></td><td><a class="stream" href="#">Stream</a></td></tr>
+  <tr class="row"><td>Feb 11, 2026 • 7:30 PM</td><td>Kentucky State*</td><td>Jackson, TN</td><td><span class="badge">–</span></td><td><a class="stream" href="#">Stream</a></td></tr>
+  <tr class="row"><td>Feb 14, 2026 • 3:00 PM</td><td>LeMoyne–Owen*</td><td>Jackson, TN</td><td><span class="badge">–</span></td><td><a class="stream" href="#">Stream</a></td></tr>
+  <tr class="row"><td>Feb 16, 2026 • 8:00 PM</td><td>at Central State*</td><td>Wilberforce, OH</td><td><span class="badge">–</span></td><td><a class="stream" href="#">Stream</a></td></tr>
+  <tr class="row"><td>Feb 19, 2026 • 7:30 PM</td><td>Fort Valley State*</td><td>Jackson, TN</td><td><span class="badge">–</span></td><td><a class="stream" href="#">Stream</a></td></tr>
+  <tr class="row"><td>Feb 21, 2026 • 3:00 PM</td><td>Clark Atlanta*</td><td>Jackson, TN</td><td><span class="badge">–</span></td><td><a class="stream" href="#">Stream</a></td></tr>
+    </tbody>
+    </table>                                                                                                                                                      
+   </section>                                                                                                                                                                                                                                                                                                                                                                                                                                                                </tb</table></section>
+
+    <!-- FHU -->
+    <section id="tab-fhu" class="tab-panel" role="tabpanel" hidden>
+      <div class="team-header">
+        <h2 style="margin:0">Freed‑Hardeman <span class="pill">2025-26</span></h2>
+      </div>
+       <p class="hint">This is the <b>original schedule</b> from the official site. Scores will be updated as they become available.</p>
+      <table aria-label="FHU schedule">
+        <thead><tr>
+          <th>Date</th><th>Opponent</th><th>Location</th><th>Result</th><th>Watch</th>
+        </tr></thead>
+        <tbody>
+          <tr class="row"><td>Oct 25, 2025</td><td>at Oakwood</td><td>Huntsville, AL</td><td><span class="badge">–</span></td><td><a class="stream" href="#">Stream</a></td></tr>
+
+  <tr class="row"><td>Oct 31, 2025</td><td>Montreat</td><td>Henderson, TN</td><td><span class="badge">–</span></td><td><a class="stream" href="#">Live Stats</a></td></tr>
+  <tr class="row"><td>Nov 01, 2025</td><td>Welch</td><td>Henderson, TN</td><td><span class="badge">–</span></td><td><a class="stream" href="#">Live Stats</a></td></tr>
+
+  <tr class="row"><td>Nov 05, 2025</td><td>at Life</td><td>Waleska, GA</td><td><span class="badge">–</span></td><td><a class="stream" href="#">Live Stats</a></td></tr>
+  <tr class="row"><td>Nov 08, 2025</td><td>Faulkner</td><td>Henderson, TN</td><td><span class="badge">–</span></td><td><a class="stream" href="#">Live Stats</a></td></tr>
+  <tr class="row"><td>Nov 14, 2025</td><td>LSU Shreveport</td><td>Henderson, TN</td><td><span class="badge">–</span></td><td><a class="stream" href="#">Live Stats</a></td></tr>
+  <tr class="row"><td>Nov 15, 2025</td><td>at Crowley’s Ridge</td><td>Paragould, AR</td><td><span class="badge">–</span></td><td><a class="stream" href="#">Live Stats</a></td></tr>
+  <tr class="row"><td>Nov 21, 2025</td><td>at Central Baptist</td><td>Conway, AR</td><td><span class="badge">–</span></td><td><a class="stream" href="#">Live Stats</a></td></tr>
+  <tr class="row"><td>Nov 24, 2025</td><td>at LSU Shreveport</td><td>Shreveport, LA</td><td><span class="badge">–</span></td><td><a class="stream" href="#">Live Stats</a></td></tr>
+
+  <tr class="row"><td>Nov 29, 2025</td><td>NAIA “The Show” — TBA</td><td>Kingsport, TN (MeadowView)</td><td><span class="badge">–</span></td><td><a class="stream" href="#">TBA</a></td></tr>
+  <tr class="row"><td>Nov 30, 2025</td><td>NAIA “The Show” — TBA</td><td>Kingsport, TN (MeadowView)</td><td><span class="badge">–</span></td><td><a class="stream" href="#">TBA</a></td></tr>
+
+  <tr class="row"><td>Dec 04, 2025</td><td>at Harris‑Stowe State</td><td>St. Louis, MO</td><td><span class="badge">–</span></td><td><a class="stream" href="#">Live Stats</a></td></tr>
+  <tr class="row"><td>Dec 06, 2025</td><td>Central Baptist</td><td>Henderson, TN</td><td><span class="badge">–</span></td><td><a class="stream" href="#">Live Stats</a></td></tr>
+  <tr class="row"><td>Dec 18, 2025</td><td>at Johnson (TN)</td><td>Knoxville, TN</td><td><span class="badge">–</span></td><td><a class="stream" href="#">Live Stats</a></td></tr>
+
+  <tr class="row"><td>Jan 03, 2026</td><td>at Faulkner</td><td>Montgomery, AL</td><td><span class="badge">–</span></td><td><a class="stream" href="#">Live Stats</a></td></tr>
+
+  <tr class="row"><td>Jan 08, 2026 • 7:30 PM</td><td>Georgetown (KY)</td><td>Henderson, TN</td><td><span class="badge">–</span></td><td><a class="stream" href="#">Live Stats</a></td></tr>
+  <tr class="row"><td>Jan 10, 2026 • 3:00 PM</td><td>Cumberlands (KY)</td><td>Henderson, TN</td><td><span class="badge">–</span></td><td><a class="stream" href="#">Live Stats</a></td></tr>
+
+  <tr class="row"><td>Jan 15, 2026 • 7:30 PM</td><td>at Lindsey Wilson</td><td>Columbia, KY</td><td><span class="badge">–</span></td><td><a class="stream" href="#">Live Stats</a></td></tr>
+  <tr class="row"><td>Jan 17, 2026 • 2:00 PM</td><td>at Campbellsville</td><td>Campbellsville, KY</td><td><span class="badge">–</span></td><td><a class="stream" href="#">Live Stats</a></td></tr>
+  <tr class="row"><td>Jan 22, 2026 • 3:00 PM</td><td>at Bethel (TN)</td><td>McKenzie, TN</td><td><span class="badge">–</span></td><td><a class="stream" href="#">Live Stats</a></td></tr>
+  <tr class="row"><td>Jan 24, 2026 • 7:30 PM</td><td>Cumberland (TN)</td><td>Henderson, TN</td><td><span class="badge">–</span></td><td><a class="stream" href="#">Live Stats</a></td></tr>
+  <tr class="row"><td>Jan 29, 2026 • 2:00 PM</td><td>at Georgetown (KY)</td><td>Georgetown, KY</td><td><span class="badge">–</span></td><td><a class="stream" href="#">Live Stats</a></td></tr>
+  <tr class="row"><td>Jan 31, 2026 • 6:30 PM</td><td>at Cumberlands (KY)</td><td>Williamsburg, KY</td><td><span class="badge">–</span></td><td><a class="stream" href="#">Live Stats</a></td></tr>
+
+  <tr class="row"><td>Feb 07, 2026 • 7:30 PM</td><td>Bethel (TN)</td><td>Henderson, TN</td><td><span class="badge">–</span></td><td><a class="stream" href="#">Live Stats</a></td></tr>
+  <tr class="row"><td>Feb 12, 2026 • 3:00 PM</td><td>Lindsey Wilson</td><td>Henderson, TN</td><td><span class="badge">–</span></td><td><a class="stream" href="#">Live Stats</a></td></tr>
+  <tr class="row"><td>Feb 14, 2026 • 7:30 PM</td><td>Campbellsville</td><td>Henderson, TN</td><td><span class="badge">–</span></td><td><a class="stream" href="#">Live Stats</a></td></tr>
+  <tr class="row"><td>Feb 19, 2026 • 3:00 PM</td><td>at Cumberland (TN)</td><td>Lebanon, TN</td><td><span class="badge">–</span></td><td><a class="stream" href="#">Live Stats</a></td></tr>
+
+  <tr class="row"><td>Feb 27–Mar 02, 2026</td><td>Mid‑South Conference Tournament (TBD)</td><td>Bowling Green, KY</td><td><span class="badge">–</span></td><td><a class="stream" href="#">TBA</a></td></tr>
+  <tr class="row"><td>Mar 13–Mar 14, 2026</td><td>NAIA National Championship – First & Second Rounds (TBD)</td><td>Campus Sites</td><td><span class="badge">–</span></td><td><a class="stream" href="#">TBA</a></td></tr>
+  <tr class="row"><td>Mar 19–Mar 24, 2026</td><td>NAIA National Championship – Final Site (TBD)</td><td>Kansas City, MO</td><td><span class="badge">–</span></td><td><a class="stream" href="#">TBA</a></td></tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+</div>
+
+<script>
+  // Simple tab switcher
+  const buttons = document.querySelectorAll('.tab-btn');
+  const panels = {
+    union: document.getElementById('tab-union'),
+    lane: document.getElementById('tab-lane'),
+    fhu: document.getElementById('tab-fhu')
+  };
+  buttons.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      buttons.forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      Object.values(panels).forEach(p=>p.hidden=true);
+      panels[btn.dataset.tab].hidden=false;
+    });
+  });
+</script>
+</body>
+</html>

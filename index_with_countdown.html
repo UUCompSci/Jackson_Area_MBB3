@@ -1,0 +1,74 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Jackson Area Men's Basketball</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: #f4f4f4;
+            color: #333;
+            padding: 50px;
+        }
+        h1 {
+            color: #c90000;
+            font-size: 36px;
+        }
+        .countdown {
+            font-size: 28px;
+            margin: 20px 0;
+            color: #000;
+        }
+        .links a {
+            display: block;
+            margin: 15px;
+            font-size: 20px;
+            text-decoration: none;
+            color: #003366;
+        }
+        .links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Jackson Area Men's Basketball</h1>
+
+    <div class="countdown">
+        🏀 Next Game: Union vs TBD<br>
+        ⏳ Countdown: <span id="countdown">Loading...</span>
+    </div>
+
+    <div class="links">
+        <a href="teams_union.html">🏀 Union University Team Page</a>
+        <a href="teams_lane.html">🔥 Lane College Team Page</a>
+        <a href="teams_fhu.html">🦁 Freed-Hardeman Team Page</a>
+    </div>
+
+    <script>
+        // Set game date and time (example: Nov 1, 2025 at 7:00 PM CST)
+        const gameDate = new Date("November 1, 2025 19:00:00 GMT-0500").getTime();
+
+        const countdownFunc = setInterval(() => {
+            const now = new Date().getTime();
+            const distance = gameDate - now;
+
+            if (distance < 0) {
+                document.getElementById("countdown").innerHTML = "Game in progress or completed.";
+                clearInterval(countdownFunc);
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("countdown").innerHTML =
+                `${days}d ${hours}h ${minutes}m ${seconds}s`;
+        }, 1000);
+    </script>
+</body>
+</html>

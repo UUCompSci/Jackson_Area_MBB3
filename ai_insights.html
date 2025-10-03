@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AI Insight – First Half Analyzer</title>
+
+<!-- All styles are scoped under .aii to avoid collisions with your site -->
+<style>
+  .aii{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:#111}
+  .aii *{box-sizing:border-box}
+
+  /* prevent global site CSS from enlarging or clipping this tool */
+  .aii{font-size:16px; line-height:1.35;}
+  .aii input, .aii label, .aii button, .aii span, .aii p{font-size:16px}
+
+  .aii .aii-container{max-width:960px;margin:24px auto;padding:16px}
+  .aii h1{font-size:42px;margin:0 0 10px}
+  .aii .aii-muted{opacity:.75}
+
+  .aii .aii-card{
+    background:#fff;border:1px solid #ddd;border-radius:14px;padding:16px;
+    width:100%;max-width:960px;overflow:visible; /* guard against clipping */
+    box-shadow:0 6px 24px rgba(0,0,0,.08);
+  }
+
+  .aii .aii-grid{display:grid;gap:12px}
+  /* responsive 3-up that wraps to 2 / 1 when space is tight */
+  .aii .aii-grid-3{grid-template-columns:repeat(auto-fit, minmax(240px, 1fr))}
+
+  .aii .aii-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+
+  .aii label.aii-grid{min-width:0}
+  .aii label.aii-grid > span{font-size:14px;color:#444;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+  .aii input[type="text"],
+  .aii input[type="number"],
+  .aii input[type="file"]{
+    width:100%;max-width:100%;padding:10px;border:1px solid #ccc;border-radius:10px;background:#fff
+  }
+  .aii input[type="color"]{width:48px;height:32px;border:1px solid #ccc;border-radius:6px;padding:0}
+
+  .aii .aii-btn{padding:10px 14px;border-radius:10px;border:1px solid #333;background:#111;color:#fff;cursor:pointer}
+  .aii .aii-btn.aii-outline{background:#fff;color:#111}
+
+  .aii .aii-pill{font-size:12px;border:1px solid #ccc;border-radius:999px;padding:3px 8px}
+  .aii .aii-badge{display:inline-block;width:16px;height:16px;border-radius:50%;border:1px solid #ccc;margin-right:8px}
+
+  .aii .aii-progress{height:8px;background:#eee;border-radius:20px;overflow:hidden}
+  .aii .aii-progress > div{height:100%;background:#111;width:0%}
+
+  .aii .aii-list{padding-left:18px}
+  .aii .aii-hidden{display:none}
+  .aii .aii-error{background:#fee;border:1px solid #fca5a5;color:#991b1b;padding:12px;border-radius:10px}
+</style>
+</head>
+<body>
+<div class="aii">
+  <div class="aii-container">
+    <h1>AI Insight</h1>
+    <p class="aii-muted">Analyze the <strong>first half</strong> of a game video for stats, strengths, weaknesses, and improvement ideas.</p>
+
+    <div class="aii-card aii-grid">
+      <form id="ai-form" class="aii-grid" enctype="multipart/form-data">
+        <div class="aii-grid aii-grid-3">
+          <label class="aii-grid">
+            <span>Team Name</span>
+            <input type="text" id="teamName" name="teamName" placeholder="River City Raptors" required />
+          </label>
+
+          <label class="aii-grid">
+            <span>Team Color</span>
+            <div class="aii-row">
+              <input type="color" id="teamColor" name="teamColor" value="#0ea5e9" title="Pick color" />
+              <input type="text" id="teamColorHex" value="#0ea5e9" />
+            </div>
+          </label>
+
+          <label class="aii-grid">
+            <span>Player Number</span>
+            <input type="number" id="playerNumber" name="playerNumber" placeholder="5" min="0" required />
+          </label>
+        </div>
+
+        <label class="aii-grid">
+          <span>Game Video</span>
+          <input type="file" id="video" name="video" accept="video/*" required />
+        </label>
+
+        <div class="aii-progress" id="uploadProgress" aria-hidden="true"><div></div></div>
+
+        <div class="aii-row">
+          <button type="submit" class="aii-btn" id="analyzeBtn">Analyze First Half</button>
+          <button type="button" class="aii-btn aii-outline" id="resetBtn">Reset</button>
+          <span class="aii-muted" id="statusText"></span>
+        </div>
+      </form>
+    </div>
+
+    <div id="errorBox" class="aii-error aii-hidden"></div>
+    <div id="result" class="aii-grid" style="margin-top:20px"></div>
+  </div>
+</div>
+
+<script>
+  // Change if your backend runs elsewhere:
+  const API_URL = "/api/ai-insight/analyze";
+
+  const form = document.getElementById('ai-form');
+  const teamNameEl = document.getElementById('teamName');
+  const teamColorEl = document.getElementById('teamColor');
+  const teamColorHexEl = document.getElementById('teamColorHex');
+  const playerNumberEl = document.getElementById('playerNumber');
+  const videoEl = document.getElementById('video');
+  const progressEl = document.getElementById('uploadProgress');
+  const progressBar = progressEl.querySelector('div');
+  const statusText = document.getElementById('statusText');
+  const resultEl = document.getElementById('result');
+  const errorBox = document.getElementById('errorBox');
+  const analyzeBtn = document.getElementById('analyzeBtn');
+  const resetBtn = document.getElementById('resetBtn');
+
+  // keep the two color inputs in sync
+  teamColorEl.addEventListener('input', () => teamColorHexEl.value = teamColorEl.value);
+  teamColorHexEl.addEventListener('input', () => teamColorEl.value = teamColorHexEl.value);
+
+  resetBtn.addEventListener('click', () => {
+    form.reset();
+    teamColorEl.value = '#0ea5e9';
+    teamColorHexEl.value = '#0ea5e9';
+    progressEl.setAttribute('aria-hidden','true');
+    progressBar.style.width = '0%';
+    statusText.textContent = '';
+    resultEl.innerHTML = '';
+    errorBox.classList.add('aii-hidden');
+    errorBox.textContent = '';
+  });
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    errorBox.classList.add('aii-hidden');
+    errorBox.textContent = '';
+
+    const file = videoEl.files && videoEl.files[0];
+    if (!file) return showError('Please choose a video file.');
+
+    const fd = new FormData();
+    fd.append('teamName', teamNameEl.value.trim());
+    fd.append('teamColor', teamColorEl.value.trim());
+    fd.append('playerNumber', String(playerNumberEl.value || ''));
+    fd.append('video', file);
+
+    analyzeBtn.disabled = true;
+    statusText.textContent = 'Uploading…';
+    progressEl.removeAttribute('aria-hidden');
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', API_URL);
+    xhr.responseType = 'json';
+
+    xhr.upload.onprogress = (evt) => {
+      if (evt.lengthComputable) {
+        progressBar.style.width = Math.round((evt.loaded / evt.total) * 100) + '%';
+      }
+    };
+
+    xhr.onerror = () => { showError('Network error during upload.'); analyzeBtn.disabled = false; };
+
+    xhr.onload = () => {
+      analyzeBtn.disabled = false;
+      statusText.textContent = '';
+      if (xhr.status >= 200 && xhr.status < 300) {
+        renderResult(xhr.response || {});
+      } else {
+        showError((xhr.response && xhr.response.error) ? xhr.response.error : 'Server error (' + xhr.status + ')');
+      }
+    };
+
+    xhr.send(fd);
+  });
+
+  function showError(msg){
+    errorBox.textContent = msg;
+    errorBox.classList.remove('aii-hidden');
+  }
+
+  // Renders analysis result
+  function renderResult(r){
+    const teamName = r?.team?.name || teamNameEl.value;
+    const teamColor = r?.team?.color || teamColorEl.value;
+    const playerNo  = r?.team?.playerNumber || playerNumberEl.value;
+    const model     = r?.model || 'AI';
+
+    const stats       = r?.stats || {};
+    const strengths   = r?.strengths || [];
+    const weaknesses  = r?.weaknesses || [];
+    const areas       = r?.areasForImprovement || [];
+    const suggestions = r?.suggestions || [];
+    const keyMoments  = r?.keyMoments || [];
+
+    resultEl.innerHTML = "";
+
+    const header = document.createElement("div");
+    header.className = "aii-card aii-row";
+    header.style.justifyContent = "space-between";
+
+    const left = document.createElement("div");
+    left.className = "aii-row";
+    const badge = document.createElement("span");
+    badge.className = "aii-badge";
+    badge.style.background = teamColor;
+    const h2 = document.createElement("h2");
+    h2.style.margin = "0";
+    h2.textContent = `${teamName} — #${playerNo}`;
+    left.appendChild(badge); left.appendChild(h2);
+
+    const modelPill = document.createElement("span");
+    modelPill.className = "aii-pill aii-muted";
+    modelPill.textContent = `Model: ${model}`;
+
+    header.appendChild(left);
+    header.appendChild(modelPill);
+    resultEl.appendChild(header);
+
+    const statsSec = document.createElement("section");
+    statsSec.className = "aii-grid";
+    statsSec.style.marginTop = "8px";
+    const statsH = document.createElement("h3");
+    statsH.textContent = "Stats (first half)";
+    const statsGrid = document.createElement("div");
+    statsGrid.className = "aii-grid aii-grid-3";
+
+    const keys = Object.keys(stats);
+    if(keys.length === 0){
+      const no = document.createElement("div");
+      no.className = "aii-muted";
+      no.textContent = "No stats detected.";
+      statsGrid.appendChild(no);
+    } else {
+      keys.forEach(k=>{
+        const card = document.createElement("div");
+        card.className = "aii-card";
+        const label = document.createElement("div");
+        label.className = "aii-muted";
+        label.style.fontSize = "12px";
+        label.textContent = k;
+        const val = document.createElement("div");
+        val.style.fontWeight = "700";
+        val.style.fontSize = "20px";
+        val.textContent = String(stats[k]);
+        card.appendChild(label); card.appendChild(val);
+        statsGrid.appendChild(card);
+      });
+    }
+    statsSec.appendChild(statsH); statsSec.appendChild(statsGrid);
+    resultEl.appendChild(statsSec);
+
+    const trio = document.createElement("section");
+    trio.className = "aii-grid";
+    trio.style.marginTop = "8px";
+    const trioGrid = document.createElement("div");
+    trioGrid.className = "aii-grid aii-grid-3";
+    trioGrid.appendChild(makeListCard("Strengths", strengths));
+    trioGrid.appendChild(makeListCard("Weaknesses", weaknesses));
+    trioGrid.appendChild(makeListCard("Areas for Improvement", areas));
+    trio.appendChild(trioGrid);
+    resultEl.appendChild(trio);
+
+    const sugSec = document.createElement("section");
+    sugSec.className = "aii-grid";
+    sugSec.style.marginTop = "8px";
+    const sugH = document.createElement("h3"); sugH.textContent = "Suggestions";
+    sugSec.appendChild(sugH);
+    sugSec.appendChild(makeBullets(suggestions));
+    resultEl.appendChild(sugSec);
+
+    if (keyMoments.length){
+      const kmSec = document.createElement("section");
+      kmSec.className = "aii-grid";
+      kmSec.style.marginTop = "8px";
+      const kmH = document.createElement("h3"); kmH.textContent = "Key Moments";
+      const ul = document.createElement("ul");
+      ul.className = "aii-grid"; ul.style.gap = "8px"; ul.style.listStyle = "none";
+      ul.style.padding = "0"; ul.style.margin = "0";
+      keyMoments.forEach(m=>{
+        const li = document.createElement("li");
+        li.className = "aii-row";
+        const t = document.createElement("span");
+        t.className = "aii-pill"; t.style.fontSize = "12px";
+        t.textContent = m?.t || "approx";
+        const note = document.createElement("span");
+        note.textContent = m?.note || "";
+        li.appendChild(t); li.appendChild(note);
+        ul.appendChild(li);
+      });
+      kmSec.appendChild(kmH); kmSec.appendChild(ul);
+      resultEl.appendChild(kmSec);
+    }
+
+    const actions = document.createElement("section");
+    actions.className = "aii-row";
+    actions.style.marginTop = "8px";
+    const copyBtn = document.createElement("button");
+    copyBtn.className = "aii-btn aii-outline"; copyBtn.textContent = "Copy JSON";
+    const dl = document.createElement("a");
+    dl.className = "aii-btn aii-outline"; dl.textContent = "Download JSON"; dl.href = "#";
+    actions.appendChild(copyBtn); actions.appendChild(dl);
+    resultEl.appendChild(actions);
+
+    const jsonStr = JSON.stringify(r, null, 2);
+    copyBtn.onclick = () => navigator.clipboard.writeText(jsonStr);
+    dl.onclick = (e) => {
+      e.preventDefault();
+      const url = 'data:application/json;charset=utf-8,' + encodeURIComponent(jsonStr);
+      dl.setAttribute('href', url);
+      dl.setAttribute('download', `ai-insight-${Date.now()}.json`);
+    };
+  }
+
+  function makeListCard(title, items){
+    const card = document.createElement("div");
+    card.className = "aii-card";
+    const h4 = document.createElement("h4");
+    h4.style.marginTop = "0"; h4.textContent = title;
+    card.appendChild(h4);
+    if(items && items.length){
+      card.appendChild(makeBullets(items));
+    } else {
+      const no = document.createElement("div");
+      no.className = "aii-muted"; no.textContent = "No items";
+      card.appendChild(no);
+    }
+    return card;
+  }
+
+  function makeBullets(items){
+    const ul = document.createElement("ul");
+    ul.className = "aii-list";
+    (items || []).forEach(s=>{
+      const li = document.createElement("li");
+      li.textContent = String(s);
+      ul.appendChild(li);
+    });
+    return ul;
+  }
+</script>
+</body>
+</html>
